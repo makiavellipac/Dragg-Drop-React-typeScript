@@ -24,7 +24,14 @@ const ContainerTask = styled.div<propsTaskList>`
   border-radius: 2px;
   padding: 8px;
   margin-bottom: 8px;
+  display: flex;
   background-color: ${(props) => (props.isDragging ? 'lightgreen' : 'white')};
 `;
 
-export { ContainerColumn, Title, TaskList, ContainerTask };
+const Handle = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+`;
+export { ContainerColumn, Title, TaskList, ContainerTask, Handle };

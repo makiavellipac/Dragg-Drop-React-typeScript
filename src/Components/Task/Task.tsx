@@ -4,7 +4,8 @@ import {
   DraggableProvided,
   DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
-import { ContainerTask } from '../Common-Components/Common-componets';
+import { ContainerTask, Handle } from '../Common-Components/Common-componets';
+import tresPuntos from '../../Assets/Images/tres.png';
 
 type propTypes = {
   task: {
@@ -18,9 +19,11 @@ const Task: FC<propTypes> = ({ task, index }) => (
     {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
       <ContainerTask
         {...provided.draggableProps}
-        {...provided.dragHandleProps}
         ref={provided.innerRef}
         isDragging={snapshot.isDragging}>
+        <Handle {...provided.dragHandleProps}>
+          <img src={tresPuntos} alt="puntos" style={{ width: '100%' }} />
+        </Handle>
         {task.content}
       </ContainerTask>
     )}
