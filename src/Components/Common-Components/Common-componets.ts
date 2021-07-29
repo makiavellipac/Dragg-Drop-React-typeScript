@@ -21,7 +21,7 @@ const TaskList = styled.div<propsTaskList>`
   transition: background-color 0.2s ease;
   flex-grow: 1;
   min-height: 100px;
-  background-color: ${(props) => (props.isDragging ? 'skyblue' : 'white')};
+  background-color: ${(props) => (props.isDragging ? 'lightgrey' : 'white')};
 `;
 
 const ContainerTask = styled.div<propsTaskList>`
