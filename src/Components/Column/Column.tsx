@@ -1,5 +1,9 @@
 import React, { FC } from 'react';
-import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import {
+  Droppable,
+  DroppableProvided,
+  DroppableStateSnapshot,
+} from 'react-beautiful-dnd';
 import Task from '../Task/Task';
 import { task, columna } from '../../Types/taks';
 import {
@@ -17,8 +21,11 @@ const Column: FC<propTypes> = ({ column, tasks }) => (
   <ContainerColumn>
     <Title>{column.title}</Title>
     <Droppable droppableId={column.id}>
-      {(provided: DroppableProvided) => (
-        <TaskList ref={provided.innerRef} {...provided.droppableProps}>
+      {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+        <TaskList
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          isDragging={snapshot.isDraggingOver}>
           {tasks.map((tas, index) => (
             <Task key={tas.id} task={tas} index={index} />
           ))}
