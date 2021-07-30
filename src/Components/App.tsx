@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { Button, TextField } from '@material-ui/core';
 import {
   DragDropContext,
   Droppable,
@@ -15,8 +16,15 @@ const Container = styled.div`
   display: flex;
 `;
 
+type inputsType = {
+  columns: string;
+  task: string;
+};
+
 const App: FC = () => {
   const [state, setState] = useState<initialDataType>(initialData);
+  const [inputs, setInputs] = useState<inputsType>({ columns: '', task: '' });
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
@@ -93,27 +101,79 @@ const App: FC = () => {
     return null;
   };
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="column">
-        {(provided: DroppableProvided) => (
-          <Container {...provided.droppableProps} ref={provided.innerRef}>
-            {state.columnOrder.map((columnId, index) => {
-              const column = state.columns[columnId];
-              const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
-              return (
-                <Column
-                  key={column.id}
-                  column={column}
-                  tasks={tasks}
-                  index={index}
-                />
-              );
-            })}
-            {provided.placeholder}
-          </Container>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable
+          droppableId="all-columns"
+          direction="horizontal"
+          type="column">
+          {(provided: DroppableProvided) => (
+            <Container {...provided.droppableProps} ref={provided.innerRef}>
+              {state.columnOrder.map((columnId, index) => {
+                const column = state.columns[columnId];
+                const tasks = column.taskIds.map(
+                  (taskId) => state.tasks[taskId],
+                );
+                return (
+                  <Column
+                    key={column.id}
+                    column={column}
+                    tasks={tasks}
+                    index={index}
+                  />
+                );
+              })}
+              {provided.placeholder}
+            </Container>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <Container style={{ alignItems: 'center', height: '50px' }}>
+        <TextField
+          id="column-input columns"
+          label="Column"
+          variant="outlined"
+          style={{ width: '60%', marginRight: '15px' }}
+          onChange={(e) =>
+            setInputs({
+              ...inputs,
+              [e.currentTarget.name]: e.currentTarget.value,
+            })
+          }
+          value={inputs.columns}
+          name="columns"
+        />
+        <Button
+          variant="outlined"
+          color="primary"
+          style={{ width: '150px', height: '56px' }}>
+          Añadir Columna
+        </Button>
+      </Container>
+      <Container
+        style={{ alignItems: 'center', height: '50px', marginTop: '15px' }}>
+        <TextField
+          id="column-input task"
+          label="Task"
+          variant="outlined"
+          style={{ width: '60%', marginRight: '15px' }}
+          onChange={(e) =>
+            setInputs({
+              ...inputs,
+              [e.currentTarget.name]: e.currentTarget.value,
+            })
+          }
+          value={inputs.task}
+          name="task"
+        />
+        <Button
+          variant="outlined"
+          color="primary"
+          style={{ width: '150px', height: '56px' }}>
+          Añadir Task
+        </Button>
+      </Container>
+    </>
   );
 };
 
